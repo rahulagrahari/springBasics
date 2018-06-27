@@ -3,6 +3,7 @@ package com.example.learning.school;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,12 @@ public class SchoolController {
 	@Autowired
 	private SchoolService schoolService;
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@RequestMapping(method=RequestMethod.GET, value="/hello")
+	public String hello(){
+		return "hello";
+ 
+		}
 	@RequestMapping(method=RequestMethod.GET, value="/school")
 	public List<School> getAllSchools(){
 		return schoolService.getAllSchool();
